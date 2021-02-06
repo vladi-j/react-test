@@ -1,10 +1,10 @@
 import styled from "styled-components"
 
-const SliderContent = styled.div.attrs(props => ({
+const SliderContent = styled.div.attrs(({translate, transition, width}) => ({
     style: {
-        transform: `translateX(-${props.translate}px)`,
-        transition: `transform ease-out ${props.transition}s`,
-        width: `${props.width}px`,
+        transform: `translateX(-${translate}px)`,
+        transition: `transform ease-out ${transition}s`,
+        width: `${width}px`,
     },
 }))`height: 100%;
     display: flex;

@@ -6,14 +6,14 @@ import styled from "styled-components"
 const ArrowType = styled.img`
     position: absolute;
     width: 30px;
-    top: 50%;
+    bottom: 50%;
     ${props => props.direction}: 25px;
     float: ${props => props.direction};
 `
 
-function Arrow(props){
-    const source = props.direction == 'left' ? LeftArrow : RightArrow;
-    return(<div><ArrowType direction={props.direction} src={source} onClick={props.clickAction}/></div>)
+const Arrow = ({direction, clickAction}) => {
+    const source = direction == 'left' ? LeftArrow : RightArrow;
+    return(<div><ArrowType direction={direction} src={source} onClick={clickAction}/></div>)
 }
 
 export default Arrow

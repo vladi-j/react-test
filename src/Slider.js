@@ -3,7 +3,6 @@ import SliderContent from './SliderContent'
 import Slide from './Slide'
 import Arrow from './Arrow'
 import styled from "styled-components"
-import AnyHTML from './AnyHTML'
 import SliderDots from './SliderDots'
 
 const sliderW =  window.innerWidth/1.5;
@@ -16,7 +15,7 @@ const SliderDiv = styled.div`
     height: auto;
 `
 
-function Slider(){
+const Slider = () =>{
 
     const [state, setState] = useState({
         touchStartX: 0,
@@ -26,32 +25,32 @@ function Slider(){
         transition: 0
     })
 
-    let content = [
-                    <AnyHTML content={<img width={sliderW} src='https://cdn.pixabay.com/photo/2020/09/29/23/38/team-5614157_1280.png'></img>}/>,
-                    <AnyHTML content={<h1 width={sliderW}>Hello World!</h1>}/>,
-                    <AnyHTML content={<img width={sliderW} src='https://cdn.pixabay.com/photo/2021/01/27/13/47/cliff-5954980_1280.jpg'></img>}/>,
-                    <AnyHTML content={
-                    <table width={sliderW}>
-                        <tbody>
-                            <tr>
-                                <th>Firstname</th>
-                                <th>Lastname</th>
-                            </tr>
-                            <tr>
-                                <td>Peter</td>
-                                <td>Griffin</td>
-                            </tr>
-                            <tr>
-                                <td>Lois</td>
-                                <td>Griffin</td>
-                            </tr>
-                        </tbody>
-                    </table>}/>,
-                    <AnyHTML content={<img width={sliderW} src='https://cdn.pixabay.com/photo/2014/07/28/20/39/dusk-404072_1280.jpg'></img>}/>,
-                    <AnyHTML content={<img width={sliderW} src='https://cdn.pixabay.com/photo/2021/01/21/14/10/egret-5937499_1280.jpg'></img>}/>
-                  ]
+    const content = [
+                        {"content": <img width={sliderW} src='https://cdn.pixabay.com/photo/2020/09/29/23/38/team-5614157_1280.png'></img>},
+                        {"content": <h1 width={sliderW}>Hello World!</h1>},
+                        {"content": <img width={sliderW} src='https://cdn.pixabay.com/photo/2021/01/27/13/47/cliff-5954980_1280.jpg'></img>},
+                        {"content": <table width={sliderW}>
+                                        <tbody>
+                                            <tr>
+                                                <th>Firstname</th>
+                                                <th>Lastname</th>
+                                            </tr>
+                                            <tr>
+                                                <td>Peter</td>
+                                                <td>Griffin</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Lois</td>
+                                                <td>Griffin</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                        },
+                        {"content": <img width={sliderW} src='https://cdn.pixabay.com/photo/2014/07/28/20/39/dusk-404072_1280.jpg'></img>},
+                        {"content": <img width={sliderW} src='https://cdn.pixabay.com/photo/2021/01/21/14/10/egret-5937499_1280.jpg'></img>}
+                    ]
 
-    function handleEnd(){
+    const handleEnd = () =>{
         const slidePosition = state.location / sliderW;
         const slideDecimal = slidePosition % 1;
         const slideIndex = slidePosition - slideDecimal;
@@ -74,7 +73,7 @@ function Slider(){
         
     }
 
-    function handleMotionStart(clientX){
+    const handleMotionStart = (clientX) => {
         setState({
             ...state,
             beingTouched: true,
@@ -82,7 +81,7 @@ function Slider(){
         })
     }
 
-    function handleMovement(clientX){
+    const handleMovement = (clientX) =>{
         if(state.beingTouched === true){
             let difference = state.touchStartX - clientX;
             let newLocation = state.location + difference;
@@ -100,32 +99,32 @@ function Slider(){
         }
     }
 
-    function handleMouseDown(mouseDownEvent){
+    const handleMouseDown = (mouseDownEvent) =>{
         mouseDownEvent.preventDefault();
         handleMotionStart(mouseDownEvent.clientX);
     }
 
-    function handleMouseMove(mouseMoveEvent) {
+    const handleMouseMove = (mouseMoveEvent) =>{
         handleMovement(mouseMoveEvent.clientX);
     }
 
-    function handleMouseUp() {
+    const handleMouseUp = () =>{
         handleEnd();
     }
       
-    function handleMouseLeave() {
+    const handleMouseLeave = () =>{
         handleEnd();
     }
 
-    function handleTouchStart(touchStartEvent){
+    const handleTouchStart = (touchStartEvent) =>{
         handleMotionStart(touchStartEvent.targetTouches[0].clientX);
     }
 
-    function handleTouchMove(touchMoveEvent){
+    const handleTouchMove = (touchMoveEvent) =>{
         handleMovement(touchMoveEvent.targetTouches[0].clientX);
     }
 
-    function switchTo(index){
+    const switchTo = (index) =>{
         const newLocation = index * sliderW;
         setState({
             ...state,
@@ -137,7 +136,7 @@ function Slider(){
         });
     }
 
-    function handleTouchEnd(){
+    const handleTouchEnd = () =>{
         handleEnd();
     }
 
@@ -165,13 +164,11 @@ function Slider(){
             onTouchEnd={() => handleTouchEnd()}
         >
             <SliderContent translate={state.location} transition={state.transition} width={sliderW * content.length}>
-                {content.map((slide, index) =>
-                <Slide key={index} content={slide} />
-                )}
+                <Slide slideContent={content}/>
             </SliderContent>
             <Arrow direction="left" clickAction={slideLeft}/>
             <Arrow direction="right" clickAction={slideRight}/>
-            <SliderDots sliderLength={content.length} clickAction={switchTo}/>
+            <SliderDots sliderContent={content} clickAction={switchTo} activeSlide={state.activeIndex}/>
         </SliderDiv>
     )
 }

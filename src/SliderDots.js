@@ -25,23 +25,32 @@ const Dot = styled.label`
     position: relative;
     border-radius: 100%;
     display: inline-block;
+    background-color: rgba(100, 100, 100, 0.6);
+`
+
+const ActiveDot = styled.label`
+    top: -5px;
+    width: 11px;
+    height: 11px;
+    margin: 0 4px;
+    position: relative;
+    border-radius: 100%;
+    display: inline-block;
     background-color: rgba(0, 0, 0, 0.6);
 `
 
-function SliderDots({sliderLength, clickAction}){
+const SliderDots = ({sliderContent, clickAction, activeSlide}) =>{
 
     const changeSlide = e =>(
         clickAction(e.target.id)
     )
-
+    
     return(
         <DotContainer>
             <Dots>
-            {[...Array(sliderLength),
-                ].map((value, index) => (
-                <Dot id={index} key={index} onClick={changeSlide}/>
-                )
-            )}
+                {sliderContent.map((slide, index) =>
+                    index == activeSlide ? <ActiveDot id={index} key={index} onClick={changeSlide}/> : <Dot id={index} key={index} onClick={changeSlide}/>
+                )}
             </Dots>
         </DotContainer>
     )

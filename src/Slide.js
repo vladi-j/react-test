@@ -6,10 +6,12 @@ const SlideDiv = styled.div`
     height: auto;
 `
 
-const Slide = ({content}) => (
-    <SlideDiv>
-        {content}
-    </SlideDiv>
+const Slide = ({slideContent}) => (
+    slideContent.map((slide, index) =>
+        <SlideDiv key={index}>
+            {slide.content}
+        </SlideDiv>
+    )
 )
 
 export default Slide
