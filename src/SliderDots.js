@@ -49,7 +49,9 @@ const SliderDots = ({sliderContent, clickAction, activeSlide}) =>{
         <DotContainer>
             <Dots>
                 {sliderContent.map((slide, index) =>
-                    index == activeSlide ? <ActiveDot id={index} key={index} onClick={changeSlide}/> : <Dot id={index} key={index} onClick={changeSlide}/>
+                    index == activeSlide ?
+                    <ActiveDot id={index} key={index} onClick={changeSlide}/>:
+                    <Dot id={index} key={index} onClick={changeSlide}/>
                 )}
             </Dots>
         </DotContainer>

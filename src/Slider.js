@@ -5,17 +5,17 @@ import Arrow from './Arrow'
 import styled from "styled-components"
 import SliderDots from './SliderDots'
 
-const sliderW =  window.innerWidth/1.5;
+const sliderWidth =  window.innerWidth/1.5;
 
 const SliderDiv = styled.div`
     position: relative;
     overflow: hidden;
     margin: auto;
-    width:${sliderW}px;
+    width:${sliderWidth}px;
     height: auto;
 `
 
-const Slider = () =>{
+const Slider = ({content}) =>{
 
     const [state, setState] = useState({
         touchStartX: 0,
@@ -25,33 +25,8 @@ const Slider = () =>{
         transition: 0
     })
 
-    const content = [
-                        {"content": <img width={sliderW} src='https://cdn.pixabay.com/photo/2020/09/29/23/38/team-5614157_1280.png'></img>},
-                        {"content": <h1 width={sliderW}>Hello World!</h1>},
-                        {"content": <img width={sliderW} src='https://cdn.pixabay.com/photo/2021/01/27/13/47/cliff-5954980_1280.jpg'></img>},
-                        {"content": <table width={sliderW}>
-                                        <tbody>
-                                            <tr>
-                                                <th>Firstname</th>
-                                                <th>Lastname</th>
-                                            </tr>
-                                            <tr>
-                                                <td>Peter</td>
-                                                <td>Griffin</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Lois</td>
-                                                <td>Griffin</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                        },
-                        {"content": <img width={sliderW} src='https://cdn.pixabay.com/photo/2014/07/28/20/39/dusk-404072_1280.jpg'></img>},
-                        {"content": <img width={sliderW} src='https://cdn.pixabay.com/photo/2021/01/21/14/10/egret-5937499_1280.jpg'></img>}
-                    ]
-
     const handleEnd = () =>{
-        const slidePosition = state.location / sliderW;
+        const slidePosition = state.location / sliderWidth;
         const slideDecimal = slidePosition % 1;
         const slideIndex = slidePosition - slideDecimal;
         const swipedSlides = slideIndex - state.activeIndex;
@@ -86,8 +61,8 @@ const Slider = () =>{
             let difference = state.touchStartX - clientX;
             let newLocation = state.location + difference;
 
-            if(newLocation > sliderW * (content.length - 1)){
-                newLocation = sliderW * (content.length - 1);
+            if(newLocation > sliderWidth * (content.length - 1)){
+                newLocation = sliderWidth * (content.length - 1);
             } else if (newLocation < 0){
                 newLocation = 0;
             }
@@ -125,7 +100,7 @@ const Slider = () =>{
     }
 
     const switchTo = (index) =>{
-        const newLocation = index * sliderW;
+        const newLocation = index * sliderWidth;
         setState({
             ...state,
             touchStartX: 0,
@@ -163,7 +138,7 @@ const Slider = () =>{
             onTouchMove={touchMoveEvent => handleTouchMove(touchMoveEvent)}
             onTouchEnd={() => handleTouchEnd()}
         >
-            <SliderContent translate={state.location} transition={state.transition} width={sliderW * content.length}>
+            <SliderContent translate={state.location} transition={state.transition} width={sliderWidth * content.length}>
                 <Slide slideContent={content}/>
             </SliderContent>
             <Arrow direction="left" clickAction={slideLeft}/>
